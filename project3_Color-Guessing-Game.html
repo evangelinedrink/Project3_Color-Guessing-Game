@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Color Guessing Game</title>
+ 
+</head>
+
+<body>
+<h1>Color Guessing Game</h1>
+<button type="button" onclick="runGame()">Start Game</button> <!--JavaScript code is launched-->
+
+<!--JavaScript code-->
+<script>
+    const COLORS_ARRAY=["black", "blue", "cyan", "gold", "green", "magenta", "orange", "red", "white", "yellow"];
+
+    function runGame(){
+        let guess="";
+        let correct= false;
+        let numTries=0;
+        const targetIndex= Math.floor(((Math.random())*10)+1); 
+        const target= COLORS_ARRAY[targetIndex]; //Random color (string value) has been selected as the target.
+        
+        do{
+            guess=prompt("I am thinking of one of these colors: \n\n" + COLORS_ARRAY.join(" , ") + ". \n" + " What color am I thinking of? \n");
+            let guessLC= guess.toLowerCase(); //Takes the value of guess and makes it lowercase.
+            if(guessLC===null){   //If user doesn't type a string, alert below is shown.
+                alert("The color you have chosen is not in the list of colors.  Please select a color in the list. You have tried to guess the answer " + numTries + " times.");
+                return; 
+            } 
+            numTries+=1;  //Counts the number of iterations.
+            correct=checkGuess(guessLC,target);  //Checks the color user typed with the correct color. 
+        } while(!correct); //Prompted to select a different color if user's answer is not the same as the correct color. 
+        alert("Congratulations! You have guessed the correct color: \n" + guess + ". It took you " + numTries + " tries to get the correct answer."); 
+        document.body.style.background=guess; //Changes background of webpage to the correct, target color.
+    }
+
+    let numTriesF=0; //Sets the number of iterations to 0 before the code is being run in the function checkGuess().
+
+    function checkGuess(guessLC, target){
+        let correct= false;
+        if(!COLORS_ARRAY.includes(guessLC)){ //Checks to see if the value written in guess is not part of COLORS_ARRAY.
+            numTriesF+=1;    
+        alert("The color you have chosen is not in the list of colors.  Please select a color in the list. You have tried to guess the answer " + numTriesF + " times.")
+        } else if (guessLC>target){ //Comparing character value between guess and correct color.
+            numTriesF+=1;
+            alert("The color you guessed is alphabetically higher than the target color. Select another color. You have tried to guess the answer " + numTriesF + " times.");
+        } else if(guessLC<target){
+            numTriesF+=1;
+            alert("The color you guessed is alphabetically lower than the target color.  Select another color. You have tried to guess the answer " + numTriesF + " times.");
+        } else{
+            correct=true;
+        }
+        return correct;  //Return correct answer to function runGame().  
+        } 
+    
+    
+</script>
+
+</body>
+</html>
